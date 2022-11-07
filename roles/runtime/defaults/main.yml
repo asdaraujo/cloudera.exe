@@ -82,6 +82,7 @@ run__dw_default_vw_type:            "{{ dw.default_vw.type | default('hive') }}"
 run__dw_default_template_type:      "{{ dw.default_template.type | default('xsmall') }}"
 run__dw_default_dbc_suffix:         "{{ dw.default_dbc.suffix | default('dl-default') }}"
 run__dw_default_dbc:                "{{ dw.default_dbc.name | default([run__env_name, run__dw_default_dbc_suffix] | join('-')) }}"
+run__dw_data_visualizations:        "{{ dw.data_visualizations | default([]) }}"
 
 run__df_nodes_min:                  "{{ df.min_k8s_nodes | default(3) }}"
 run__df_nodes_max:                  "{{ df.max_k8s_nodes | default(5) }}"
