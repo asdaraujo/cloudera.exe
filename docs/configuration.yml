@@ -83,6 +83,11 @@ df:
 dw:
   definitions:
   suffix:
+  data_visualizations:
+    - name:
+      config:
+        userGroups: [str, ...]
+        adminGroups: [str, ...]
 env:
   aws:
     arn_partition: aws | aws-cn | aws-us-gov (See https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)

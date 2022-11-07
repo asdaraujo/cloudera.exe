@@ -63,3 +63,32 @@
       until: __dw_builds_async.finished
       retries: 120
       delay: 30
+
+    - name: Create CDP DW Data Visualizations
+      when:
+        - run__dw_data_visualizations is defined
+      cloudera.cloud.dw_data_visualization:
+        name: "{{ __dw_dataviz_item.name }}"
+        config: "{{ __dw_dataviz_item.config }}"
+        env: "{{ run__env_name }}"
+      async: 720
+      poll: 0
+      register: __dw_data_visualizations
+      loop: "{{ run__dw_data_visualizations }}"
+      loop_control:
+        loop_var: __dw_dataviz_item
+        label: "{{ __dw_dataviz_item.name }}"
+
+    - name: Wait for CDP DW Data Visualizations to complete
+      when:
+        - run__dw_data_visualizations is defined
+      ansible.builtin.async_status:
+        jid: "{{ __dw_data_visualization.ansible_job_id }}"
+      register: __dw_data_visualizations_async
+      until: __dw_data_visualizations_async.finished
+      retries: 60
+      delay: 15
+      loop: "{{ __dw_data_visualizations.results }}"
+      loop_control:
+        loop_var: __dw_data_visualization
+        label: "{{ __dw_data_visualization.__dw_dataviz_item.0.name | default ('None') }}"
